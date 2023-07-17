@@ -36,7 +36,9 @@ if select=="Recorded":
             sf.write("audio\demo.wav", prediction, 22050)
         st.header('Listen the denoised file :sound:')
         st.audio("audio\demo.wav",format='wav')
-        # st.download_button('Download clean audio',prediction)
+        # st.download_button(label='Download clean audio',data=prediction,file_name="result.wav")
+        with open('audio\demo.wav', 'rb') as f:
+            st.download_button('Download clean audio', f, file_name='result.wav')
 
 if select=="Live":
     st.title("NOISE CANCELLATION")
@@ -168,4 +170,5 @@ if select=="Live":
             sf.write("audio\demo.wav", prediction, 22050)
         st.header('Listen the denoised file :sound:')
         st.audio("audio\demo.wav",format='wav')
-        # st.download_button('Download clean audio',prediction)
+        with open('audio\demo.wav', 'rb') as f:
+            st.download_button('Download clean audio', f, file_name='result.wav')
