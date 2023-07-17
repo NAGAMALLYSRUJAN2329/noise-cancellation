@@ -1,13 +1,13 @@
 import librosa
 import streamlit as st
 import soundfile as sf
-# import sounddevice as sd
+import sounddevice as sd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 from prediction import predict_output
-import pyaudio
-import wave
+# import pyaudio
+# import wave
 
 select = st.sidebar.radio(
     "Navigation",
@@ -68,57 +68,57 @@ if select=="Live":
     # sound_file.close()
 
 
-    chunk = 1024 
-    sample_format = pyaudio.paInt16  
-    channels = 1
-    fs = 22050
-    seconds = st.number_input("Enter the duration:")
-    filename = "audio/ecording.wav"
+    # chunk = 1024 
+    # sample_format = pyaudio.paInt16  
+    # channels = 1
+    # fs = 22050
+    # seconds = st.number_input("Enter the duration:")
+    # filename = "audio/ecording.wav"
 
-    if st.button('Start recording'):
-        p = pyaudio.PyAudio()
-
-        st.write('Recording...')
-
-        stream = p.open(format=sample_format,
-                        channels=channels,
-                        rate=fs,
-                        frames_per_buffer=chunk,
-                        input=True)
-
-        frames = []
-
-        for i in range(0, int(fs / chunk * seconds)):
-            data = stream.read(chunk)
-            frames.append(data)
-
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
-
-        st.write('Finished recording')
-
-        wf = wave.open(filename, 'wb')
-        wf.setnchannels(channels)
-        wf.setsampwidth(p.get_sample_size(sample_format))
-        wf.setframerate(fs)
-        wf.writeframes(b''.join(frames))
-        wf.close()
-        st.audio("audio\ecording.wav",format='wav')
-
-
-    # sample_rate=22050
-    # duration=st.number_input("Enter the duration:")
-    # dtype='float32'
     # if st.button('Start recording'):
-    #     st.write("Recording...") 
-    #     record_voice=sd.rec(int(duration*sample_rate), samplerate=sample_rate,channels=1,dtype=dtype)
-    #     sd.wait()
-    #     st.write("Recording stopped")
-    #     if os.path.exists("audio\ecording.wav"):
-    #             os.remove("audio\ecording.wav")
-    #     sf.write("audio\ecording.wav", record_voice, 22050)
+    #     p = pyaudio.PyAudio()
+
+    #     st.write('Recording...')
+
+    #     stream = p.open(format=sample_format,
+    #                     channels=channels,
+    #                     rate=fs,
+    #                     frames_per_buffer=chunk,
+    #                     input=True)
+
+    #     frames = []
+
+    #     for i in range(0, int(fs / chunk * seconds)):
+    #         data = stream.read(chunk)
+    #         frames.append(data)
+
+    #     stream.stop_stream()
+    #     stream.close()
+    #     p.terminate()
+
+    #     st.write('Finished recording')
+
+    #     wf = wave.open(filename, 'wb')
+    #     wf.setnchannels(channels)
+    #     wf.setsampwidth(p.get_sample_size(sample_format))
+    #     wf.setframerate(fs)
+    #     wf.writeframes(b''.join(frames))
+    #     wf.close()
     #     st.audio("audio\ecording.wav",format='wav')
+
+
+    sample_rate=22050
+    duration=st.number_input("Enter the duration:")
+    dtype='float32'
+    if st.button('Start recording'):
+        st.write("Recording...") 
+        record_voice=sd.rec(int(duration*sample_rate), samplerate=sample_rate,channels=1,dtype=dtype)
+        sd.wait()
+        st.write("Recording stopped")
+        if os.path.exists("audio\ecording.wav"):
+                os.remove("audio\ecording.wav")
+        sf.write("audio\ecording.wav", record_voice, 22050)
+        st.audio("audio\ecording.wav",format='wav')
 
 
     # duration=1
