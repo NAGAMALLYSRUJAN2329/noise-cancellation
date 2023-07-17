@@ -8,3 +8,4 @@ keras==2.13.1
 streamlit==1.24.1
 sounddevice==0.4.6
 soundfile==0.12.1
+portaudio19-dev==19.6.0
